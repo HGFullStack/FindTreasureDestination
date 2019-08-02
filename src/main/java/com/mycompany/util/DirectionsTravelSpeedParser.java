@@ -1,13 +1,13 @@
-package com.mycompany.process;
+package com.mycompany.util;
 
 import com.mycompany.constants.TravelModesAndSpeeds;
 
 public class DirectionsTravelSpeedParser {
-
   private DirectionsTravelSpeedParser() {}
 
   public static int getSpeedFromTravelMode(final String travelMode) {
     int speed = 0;
+
     switch (TravelModesAndSpeeds.valueOf(travelMode)) {
       case WALK:
         speed = TravelModesAndSpeeds.WALK.getTravelSpeed();
@@ -39,6 +39,7 @@ public class DirectionsTravelSpeedParser {
 
         break;
     }
+
     return speed;
   }
 }

@@ -5,6 +5,7 @@ import com.mycompany.constants.TravelDirection;
 import com.mycompany.model.TravelDurationInput;
 import com.mycompany.model.TravelPreparationInfo;
 import com.mycompany.model.TreasureHuntTeam;
+import com.mycompany.util.DirectionsTravelDurationParseer;
 
 public class TeamMovementProcess {
   private TeamMovementProcess() {}

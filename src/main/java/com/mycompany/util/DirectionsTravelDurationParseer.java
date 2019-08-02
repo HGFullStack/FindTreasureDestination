@@ -1,4 +1,4 @@
-package com.mycompany.process;
+package com.mycompany.util;
 
 import com.mycompany.constants.Constants;
 import com.mycompany.model.TravelDurationInput;

@@ -6,11 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mycompany.constants.Constants;
-import com.mycompany.model.InputCommandsFileLoader;
+import com.mycompany.exception.AppException;
 import com.mycompany.model.TravelPreparationInfo;
 import com.mycompany.model.TreasureHuntTeam;
-import com.mycompany.process.DirectionsTravelSpeedParser;
 import com.mycompany.process.TeamMovementProcess;
+import com.mycompany.util.DirectionsTravelSpeedParser;
+import com.mycompany.util.InputCommandsFileLoader;
 
 public class TreasureHuntSearchPgm {
   private static final Logger log = LogManager.getLogger(TreasureHuntSearchPgm.class);
@@ -27,9 +28,7 @@ public class TreasureHuntSearchPgm {
         try {
           final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
 
-          if (splitArr.length != 3) {
-            continue;
-          }
+          if (splitArr.length != 3) throw new AppException("invalid input");
 
           if (splitArr.length == 3) {
             final TravelPreparationInfo travelPreparationInfo =
@@ -43,7 +42,7 @@ public class TreasureHuntSearchPgm {
                 travelPreparationInfo.getTimeInMinutes());
           }
         } catch (final Exception ex) {
-          log.error("error in parsing the file", ex);
+          log.error("error in pgm", ex);
         }
       }
 
