@@ -1,9 +1,7 @@
 package com.mycompany.constants;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public enum TravelModesAndSpeeds {
   WALK("WALK", 3),
@@ -18,22 +16,6 @@ public enum TravelModesAndSpeeds {
   private TravelModesAndSpeeds(final String travelMode, final int travelSpeed) {
     this.travelMode = travelMode;
     this.travelSpeed = travelSpeed;
-  }
-
-  public static TravelModesAndSpeeds containsMatch(final String str) {
-    for (final TravelModesAndSpeeds me : TravelModesAndSpeeds.values()) {
-      if (me.name().equalsIgnoreCase(str)) return me;
-    }
-
-    return null;
-  }
-
-  public static final Set<String> getNames() {
-    final Set<String> names = new HashSet<>(getValues().size());
-
-    getValues().forEach(str -> names.add(str.name()));
-
-    return names;
   }
 
   public String getTravelMode() {

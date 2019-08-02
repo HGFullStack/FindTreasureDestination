@@ -116,7 +116,7 @@ public class TreasureHuntSearchPgm {
 
           TeamMovementProcess.advance(instance, speed, travelDirection, time_in_minutes);
         } catch (final Exception ex) {
-          log.error("error in reading the file");
+          log.error("error in parsing the file", ex);
         }
       }
 

@@ -1,9 +1,7 @@
 package com.mycompany.constants;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public enum TravelDirection {
   NE("NE"),
@@ -19,14 +17,6 @@ public enum TravelDirection {
 
   private TravelDirection(final String travelDirection) {
     this.travelDirection = travelDirection;
-  }
-
-  public static final Set<String> getNames() {
-    final Set<String> names = new HashSet<>(getValues().size());
-
-    getValues().forEach(str -> names.add(str.name()));
-
-    return names;
   }
 
   public String getTravelDirection() {
