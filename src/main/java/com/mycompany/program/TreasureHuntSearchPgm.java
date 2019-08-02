@@ -32,15 +32,15 @@ public class TreasureHuntSearchPgm {
                   .trim()
                   .replaceAll(Constants.SINGLE_SPACE, Constants.UNDERSCORE)
                   .toUpperCase();
-          String travelDuration =
-              splitArr[1].trim().replaceAll(Constants.SINGLE_SPACE, Constants.EMPTY).toLowerCase();
-          final String travelDirection = splitArr[2].trim().toUpperCase();
-          final int speed = DirectionsTravelSpeedParser.getSpeedFromTravelMode(travelMode);
           final TravelDurationInput travelDurationInput =
-              DirectionsTravelDurationParseer.getTravelDurationParameters(travelDuration);
+              DirectionsTravelDurationParseer.getTravelDurationParameters(
+                  splitArr[1]
+                      .trim()
+                      .replaceAll(Constants.SINGLE_SPACE, Constants.EMPTY)
+                      .toLowerCase());
 
-          travelDuration = travelDurationInput.getTravelDuration().trim();
-
+          final int speed = DirectionsTravelSpeedParser.getSpeedFromTravelMode(travelMode);
+          String travelDuration = travelDurationInput.getTravelDuration().trim();
           int time_in_minutes = 0;
 
           if (!travelDurationInput.isHour_present()) {
@@ -55,7 +55,8 @@ public class TreasureHuntSearchPgm {
             time_in_minutes = Integer.parseInt(splitTime[1]) + Integer.parseInt(splitTime[0]) * 60;
           }
 
-          TeamMovementProcess.advance(instance, speed, travelDirection, time_in_minutes);
+          TeamMovementProcess.advance(
+              instance, speed, splitArr[2].trim().toUpperCase(), time_in_minutes);
           System.out.println("instance" + instance);
         } catch (final Exception ex) {
           log.error("error in parsing the file", ex);
