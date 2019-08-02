@@ -22,7 +22,7 @@ public class InputCommandsFileLoader {
       log.error("error in parsing the file", e);
     }
 
-    if (file.exists()) return file;
+    if (file != null && file.exists()) return file;
     else return null;
   }
 }
