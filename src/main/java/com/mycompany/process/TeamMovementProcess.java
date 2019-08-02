@@ -86,6 +86,27 @@ public class TeamMovementProcess {
     treasureHuntTeam.setPositionY(y);
   }
 
+  public static void checkEachLine(final TreasureHuntTeam instance, final Scanner scanner) {
+    try {
+      final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
+
+      if (splitArr.length != 3) throw new AppException("invalid input");
+
+      if (splitArr.length == 3) {
+        final TravelPreparationInfo travelPreparationInfo = prepare(splitArr);
+
+        advance(
+            instance,
+            DirectionsTravelSpeedParser.getSpeedFromTravelMode(
+                travelPreparationInfo.getTravelMode()),
+            splitArr[2].trim().toUpperCase(),
+            travelPreparationInfo.getTimeInMinutes());
+      }
+    } catch (final Exception ex) {
+      log.error("error in pgm", ex);
+    }
+  }
+
   private static String displayResult(final TreasureHuntTeam instance) {
     String result = "";
 
@@ -121,10 +142,10 @@ public class TeamMovementProcess {
         DirectionsTravelDurationParseer.getTravelDurationParameters(
             splitArr[1].trim().replaceAll(Constants.SINGLE_SPACE, Constants.EMPTY).toLowerCase());
     String travelDuration = travelDurationInput.getTravelDuration().trim();
-    int time_in_minutes = 0;
+    int timeInMinutes = 0;
 
     if (!travelDurationInput.isHour_present()) {
-      time_in_minutes = Integer.parseInt(travelDuration);
+      timeInMinutes = Integer.parseInt(travelDuration);
     } else {
       if (!travelDurationInput.isMin_present()) {
         travelDuration = travelDuration.concat(Constants.APPENDING_ZERO);
@@ -132,10 +153,10 @@ public class TeamMovementProcess {
 
       final String[] splitTime = travelDuration.split(Constants.COMMA);
 
-      time_in_minutes = Integer.parseInt(splitTime[1]) + Integer.parseInt(splitTime[0]) * 60;
+      timeInMinutes = Integer.parseInt(splitTime[1]) + Integer.parseInt(splitTime[0]) * 60;
     }
 
-    return new TravelPreparationInfo(time_in_minutes, travelMode);
+    return new TravelPreparationInfo(timeInMinutes, travelMode);
   }
 
   public static String process(final String inputFileName) {
@@ -144,28 +165,12 @@ public class TeamMovementProcess {
     try (Scanner scanner =
         new Scanner(InputCommandsFileLoader.getReadingsInputFile(inputFileName))) {
       while (scanner.hasNextLine()) {
-        try {
-          final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
-
-          if (splitArr.length != 3) throw new AppException("invalid input");
-
-          if (splitArr.length == 3) {
-            final TravelPreparationInfo travelPreparationInfo = prepare(splitArr);
-
-            advance(
-                instance,
-                DirectionsTravelSpeedParser.getSpeedFromTravelMode(
-                    travelPreparationInfo.getTravelMode()),
-                splitArr[2].trim().toUpperCase(),
-                travelPreparationInfo.getTimeInMinutes());
-          }
-        } catch (final Exception ex) {
-          log.error("error in pgm", ex);
-        }
+        checkEachLine(instance, scanner);
       }
     } catch (final Exception ex) {
       log.error("error in accessing the file ", ex);
     }
+
     return displayResult(instance);
   }
 }

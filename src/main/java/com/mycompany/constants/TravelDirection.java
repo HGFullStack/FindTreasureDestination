@@ -13,14 +13,14 @@ public enum TravelDirection {
   W("W"),
   S("S");
 
-  private final String travelDirection;
+  private final String direction;
 
-  private TravelDirection(final String travelDirection) {
-    this.travelDirection = travelDirection;
+  private TravelDirection(final String direction) {
+    this.direction = direction;
   }
 
-  public String getTravelDirection() {
-    return travelDirection;
+  public String getDirection() {
+    return direction;
   }
 
   public static final List<TravelDirection> getValues() {
