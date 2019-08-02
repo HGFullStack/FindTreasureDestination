@@ -24,8 +24,7 @@ public class TreasureHuntSearchPgm {
 
       while (scanner.hasNextLine()) {
         try {
-          final String line = scanner.nextLine();
-          final String[] splitArr = line.split(Constants.COMMA);
+          final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
           int speed = 0;
           final String travelMode =
               splitArr[0]
@@ -113,7 +112,7 @@ public class TreasureHuntSearchPgm {
 
             final String[] splitTime = travelDuration.split(Constants.COMMA);
 
-            time_in_minutes = Integer.parseInt(splitTime[0]) * 60 + Integer.parseInt(splitTime[1]);
+            time_in_minutes = Integer.parseInt(splitTime[1]) + Integer.parseInt(splitTime[0]) * 60;
           }
 
           TeamMovementProcess.advance(instance, speed, travelDirection, time_in_minutes);

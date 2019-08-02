@@ -23,7 +23,7 @@ public class InputCommandsFileLoader {
     File file = null;
 
     try {
-      file = loader.getResource(Constants.READINGS_INPUT_FILE_NAME).getFile();
+      file = loader.getResource(Constants.INPUT_FILE_NAME).getFile();
     } catch (final IOException e) {
       log.error("error in parsing the file", e);
     }
