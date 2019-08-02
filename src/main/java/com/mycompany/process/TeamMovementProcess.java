@@ -18,9 +18,9 @@ import com.mycompany.util.InputCommandsFileLoader;
 public class TeamMovementProcess {
   private static final Logger log = LogManager.getLogger(TeamMovementProcess.class);
 
-  private TeamMovementProcess() {}
+  public TeamMovementProcess() {}
 
-  private static void advance(
+  private void advance(
       final TreasureHuntTeam treasureHuntTeam,
       final int speedInMilesPerHour,
       final String travelDirection,
@@ -86,7 +86,7 @@ public class TeamMovementProcess {
     treasureHuntTeam.setPositionY(y);
   }
 
-  public static void checkEachLine(final TreasureHuntTeam instance, final Scanner scanner) {
+  public void checkEachLine(final TreasureHuntTeam instance, final Scanner scanner) {
     try {
       final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
 
@@ -107,7 +107,7 @@ public class TeamMovementProcess {
     }
   }
 
-  private static String displayResult(final TreasureHuntTeam instance) {
+  private String displayResult(final TreasureHuntTeam instance) {
     String result = "";
 
     if (instance.getPositionY() != 0) {
@@ -135,7 +135,7 @@ public class TeamMovementProcess {
     return result;
   }
 
-  private static TravelPreparationInfo prepare(final String[] splitArr) {
+  private TravelPreparationInfo prepare(final String[] splitArr) {
     final String travelMode =
         splitArr[0].trim().replaceAll(Constants.SINGLE_SPACE, Constants.UNDERSCORE).toUpperCase();
     final TravelDurationInput travelDurationInput =
@@ -159,7 +159,7 @@ public class TeamMovementProcess {
     return new TravelPreparationInfo(timeInMinutes, travelMode);
   }
 
-  public static String process(final String inputFileName) {
+  public String process(final String inputFileName) {
     final TreasureHuntTeam instance = TreasureHuntTeam.getInstance();
 
     try (Scanner scanner =

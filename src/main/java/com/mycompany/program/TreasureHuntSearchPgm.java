@@ -8,6 +8,6 @@ public class TreasureHuntSearchPgm {
 
   public static void main(final String[] args) {
 
-    System.out.println(TeamMovementProcess.process(INPUT_FILE_PATH));
+    System.out.println(new TeamMovementProcess().process(INPUT_FILE_PATH));
   }
 }
