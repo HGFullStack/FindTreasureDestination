@@ -18,8 +18,6 @@ import com.mycompany.util.InputCommandsFileLoader;
 public class TeamMovementProcess {
   private static final Logger log = LogManager.getLogger(TeamMovementProcess.class);
 
-  public TeamMovementProcess() {}
-
   private void advance(
       final TreasureHuntTeam treasureHuntTeam,
       final int speedInMilesPerHour,

@@ -22,8 +22,4 @@ public final class AppException extends Exception {
   public AppException(final String message, final Throwable cause) {
     super(message, cause);
   }
-
-  public AppException(final StringBuffer message, final Throwable cause) {
-    super(message.toString(), cause);
-  }
 }
