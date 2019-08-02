@@ -6,9 +6,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mycompany.constants.Constants;
-import com.mycompany.constants.TravelModesAndSpeeds;
 import com.mycompany.model.InputCommandsFileLoader;
+import com.mycompany.model.TravelDurationInput;
 import com.mycompany.model.TreasureHuntTeam;
+import com.mycompany.process.DirectionsTravelDurationParseer;
+import com.mycompany.process.DirectionsTravelSpeedParser;
 import com.mycompany.process.TeamMovementProcess;
 
 public class TreasureHuntSearchPgm {
@@ -25,7 +27,6 @@ public class TreasureHuntSearchPgm {
       while (scanner.hasNextLine()) {
         try {
           final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
-          int speed = 0;
           final String travelMode =
               splitArr[0]
                   .trim()
@@ -34,79 +35,18 @@ public class TreasureHuntSearchPgm {
           String travelDuration =
               splitArr[1].trim().replaceAll(Constants.SINGLE_SPACE, Constants.EMPTY).toLowerCase();
           final String travelDirection = splitArr[2].trim().toUpperCase();
+          final int speed = DirectionsTravelSpeedParser.getSpeedFromTravelMode(travelMode);
+          final TravelDurationInput travelDurationInput =
+              DirectionsTravelDurationParseer.getTravelDurationParameters(travelDuration);
 
-          switch (TravelModesAndSpeeds.valueOf(travelMode)) {
-            case WALK:
-              speed = TravelModesAndSpeeds.WALK.getTravelSpeed();
-
-              break;
-
-            case RUN:
-              speed = TravelModesAndSpeeds.RUN.getTravelSpeed();
-
-              break;
-
-            case HORSE_TROT:
-              speed = TravelModesAndSpeeds.HORSE_TROT.getTravelSpeed();
-
-              break;
-
-            case HORSE_GALLOP:
-              speed = TravelModesAndSpeeds.HORSE_GALLOP.getTravelSpeed();
-
-              break;
-
-            case ELEPHANT_RIDE:
-              speed = TravelModesAndSpeeds.ELEPHANT_RIDE.getTravelSpeed();
-
-              break;
-
-            default:
-              speed = TravelModesAndSpeeds.WALK.getTravelSpeed();
-
-              break;
-          }
-
-          boolean hour_present = false;
-
-          if (travelDuration.contains(Constants.HOUR_LOWER_CASE_KEYWORD_PLURAL)) {
-            travelDuration =
-                travelDuration.replaceAll(
-                    Constants.HOUR_LOWER_CASE_KEYWORD_PLURAL, Constants.COMMA);
-            hour_present = true;
-          }
-
-          if (travelDuration.contains(Constants.HOUR_LOWER_CASE_KEYWORD_SINGULAR)) {
-            travelDuration =
-                travelDuration.replaceAll(
-                    Constants.HOUR_LOWER_CASE_KEYWORD_SINGULAR, Constants.COMMA);
-            hour_present = true;
-          }
-
-          boolean min_present = false;
-
-          if (travelDuration.contains(Constants.MINUTES_LOWER_CASE_KEYWORD_PLURAL)) {
-            travelDuration =
-                travelDuration.replaceAll(
-                    Constants.MINUTES_LOWER_CASE_KEYWORD_PLURAL, Constants.SINGLE_SPACE);
-            min_present = true;
-          }
-
-          if (travelDuration.contains(Constants.MINUTES_LOWER_CASE_KEYWORD_SINGULAR)) {
-            travelDuration =
-                travelDuration.replaceAll(
-                    Constants.MINUTES_LOWER_CASE_KEYWORD_SINGULAR, Constants.SINGLE_SPACE);
-            min_present = true;
-          }
-
-          travelDuration = travelDuration.trim();
+          travelDuration = travelDurationInput.getTravelDuration().trim();
 
           int time_in_minutes = 0;
 
-          if (!hour_present) {
+          if (!travelDurationInput.isHour_present()) {
             time_in_minutes = Integer.parseInt(travelDuration);
           } else {
-            if (!min_present) {
+            if (!travelDurationInput.isMin_present()) {
               travelDuration = travelDuration.concat(Constants.APPENDING_ZERO);
             }
 
