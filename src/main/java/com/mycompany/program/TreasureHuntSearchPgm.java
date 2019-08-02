@@ -7,9 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.mycompany.constants.Constants;
 import com.mycompany.model.InputCommandsFileLoader;
-import com.mycompany.model.TravelDurationInput;
+import com.mycompany.model.TravelPreparationInfo;
 import com.mycompany.model.TreasureHuntTeam;
-import com.mycompany.process.DirectionsTravelDurationParseer;
 import com.mycompany.process.DirectionsTravelSpeedParser;
 import com.mycompany.process.TeamMovementProcess;
 
@@ -27,43 +26,28 @@ public class TreasureHuntSearchPgm {
       while (scanner.hasNextLine()) {
         try {
           final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
-          final String travelMode =
-              splitArr[0]
-                  .trim()
-                  .replaceAll(Constants.SINGLE_SPACE, Constants.UNDERSCORE)
-                  .toUpperCase();
-          final TravelDurationInput travelDurationInput =
-              DirectionsTravelDurationParseer.getTravelDurationParameters(
-                  splitArr[1]
-                      .trim()
-                      .replaceAll(Constants.SINGLE_SPACE, Constants.EMPTY)
-                      .toLowerCase());
 
-          final int speed = DirectionsTravelSpeedParser.getSpeedFromTravelMode(travelMode);
-          String travelDuration = travelDurationInput.getTravelDuration().trim();
-          int time_in_minutes = 0;
-
-          if (!travelDurationInput.isHour_present()) {
-            time_in_minutes = Integer.parseInt(travelDuration);
-          } else {
-            if (!travelDurationInput.isMin_present()) {
-              travelDuration = travelDuration.concat(Constants.APPENDING_ZERO);
-            }
-
-            final String[] splitTime = travelDuration.split(Constants.COMMA);
-
-            time_in_minutes = Integer.parseInt(splitTime[1]) + Integer.parseInt(splitTime[0]) * 60;
+          if (splitArr.length != 3) {
+            continue;
           }
 
-          TeamMovementProcess.advance(
-              instance, speed, splitArr[2].trim().toUpperCase(), time_in_minutes);
-          System.out.println("instance" + instance);
+          if (splitArr.length == 3) {
+            final TravelPreparationInfo travelPreparationInfo =
+                TeamMovementProcess.prepare(splitArr);
+
+            TeamMovementProcess.advance(
+                instance,
+                DirectionsTravelSpeedParser.getSpeedFromTravelMode(
+                    travelPreparationInfo.getTravelMode()),
+                splitArr[2].trim().toUpperCase(),
+                travelPreparationInfo.getTimeInMinutes());
+          }
         } catch (final Exception ex) {
           log.error("error in parsing the file", ex);
         }
       }
 
-      System.out.println("final position is " + instance);
+      System.out.println(instance);
     } catch (final Exception ex) {
       ex.printStackTrace();
     }
