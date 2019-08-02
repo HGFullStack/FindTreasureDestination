@@ -4,6 +4,8 @@ import com.mycompany.constants.TravelDirection;
 import com.mycompany.model.TreasureHuntTeam;
 
 public class TeamMovementProcess {
+  private TeamMovementProcess() {}
+
   public static void advance(
       final TreasureHuntTeam treasureHuntTeam,
       final int speedInMilesPerHour,
