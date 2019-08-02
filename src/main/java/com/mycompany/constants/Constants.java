@@ -11,6 +11,7 @@ public class Constants {
   public static final String COLON = ":";
   public static final String INPUT_FILE_NAME_ONE = "commands_input_file.txt";
   public static final String INPUT_FILE_NAME_TWO = "commands_input_file2.txt";
+  public static final String INPUT_FILE_NAME_THREE = "commands_input_file3.txt";
   public static final String HOUR_LOWER_CASE_KEYWORD_SINGULAR = "hour";
   public static final String MINUTES_LOWER_CASE_KEYWORD_SINGULAR = "min";
   public static final String HOUR_LOWER_CASE_KEYWORD_PLURAL = "hours";

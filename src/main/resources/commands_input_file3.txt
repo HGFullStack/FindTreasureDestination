@@ -1,0 +1,2 @@
+Walk, 20 mins, N
+Walk, 20 mins, E
