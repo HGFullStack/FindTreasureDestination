@@ -158,7 +158,7 @@ public class TeamMovementProcess {
   }
 
   public String process(final String inputFileName) {
-    final TreasureHuntTeam instance = TreasureHuntTeam.getInstance();
+    final TreasureHuntTeam instance = new TreasureHuntTeam();
 
     try (Scanner scanner =
         new Scanner(InputCommandsFileLoader.getReadingsInputFile(inputFileName))) {

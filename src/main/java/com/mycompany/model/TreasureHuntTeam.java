@@ -3,11 +3,10 @@ package com.mycompany.model;
 import java.util.Objects;
 
 public class TreasureHuntTeam {
-  private static final TreasureHuntTeam INSTANCE = new TreasureHuntTeam();
   private float positionX;
   private float positionY;
 
-  private TreasureHuntTeam() {}
+  public TreasureHuntTeam() {}
 
   @Override
   public boolean equals(final Object obj) {
@@ -37,10 +36,6 @@ public class TreasureHuntTeam {
     builder.append("]");
 
     return builder.toString();
-  }
-
-  public static final TreasureHuntTeam getInstance() {
-    return INSTANCE;
   }
 
   public float getPositionX() {
