@@ -115,12 +115,13 @@ public class TreasureHuntSearchPgm {
           }
 
           TeamMovementProcess.advance(instance, speed, travelDirection, time_in_minutes);
+          System.out.println("instance" + instance);
         } catch (final Exception ex) {
           log.error("error in parsing the file", ex);
         }
       }
 
-      System.out.println("instance" + instance);
+      System.out.println("final position is " + instance);
     } catch (final Exception ex) {
       ex.printStackTrace();
     }
