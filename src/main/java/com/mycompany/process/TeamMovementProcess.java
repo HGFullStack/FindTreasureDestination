@@ -1,16 +1,26 @@
 package com.mycompany.process;
 
+import java.util.Scanner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.constants.Constants;
 import com.mycompany.constants.TravelDirection;
+import com.mycompany.exception.AppException;
 import com.mycompany.model.TravelDurationInput;
 import com.mycompany.model.TravelPreparationInfo;
 import com.mycompany.model.TreasureHuntTeam;
 import com.mycompany.util.DirectionsTravelDurationParseer;
+import com.mycompany.util.DirectionsTravelSpeedParser;
+import com.mycompany.util.InputCommandsFileLoader;
 
 public class TeamMovementProcess {
+  private static final Logger log = LogManager.getLogger(TeamMovementProcess.class);
+
   private TeamMovementProcess() {}
 
-  public static void advance(
+  private static void advance(
       final TreasureHuntTeam treasureHuntTeam,
       final int speedInMilesPerHour,
       final String travelDirection,
@@ -76,7 +86,35 @@ public class TeamMovementProcess {
     treasureHuntTeam.setPositionY(y);
   }
 
-  public static TravelPreparationInfo prepare(final String[] splitArr) {
+  private static String displayResult(final TreasureHuntTeam instance) {
+    String result = "";
+
+    if (instance.getPositionY() != 0) {
+      if (instance.getPositionY() < 0) {
+        result = result + Math.abs(instance.getPositionY());
+        result = result.concat(Constants.MILES_TO_THE).concat(Constants.SOUTH_DISPLAY);
+      } else {
+        result = result + instance.getPositionY();
+        result = result.concat(Constants.MILES_TO_THE).concat(Constants.NORTH_DISPLAY);
+      }
+
+      result = result + Constants.COMMA_WITH_SPACE_AT_END;
+    }
+
+    if (instance.getPositionX() != 0) {
+      if (instance.getPositionX() < 0) {
+        result = result + Math.abs(instance.getPositionX());
+        result = result.concat(Constants.MILES_TO_THE).concat(Constants.WEST_DISPLAY);
+      } else {
+        result = result + instance.getPositionX();
+        result = result.concat(Constants.MILES_TO_THE).concat(Constants.EAST_DISPLAY);
+      }
+    }
+
+    return result;
+  }
+
+  private static TravelPreparationInfo prepare(final String[] splitArr) {
     final String travelMode =
         splitArr[0].trim().replaceAll(Constants.SINGLE_SPACE, Constants.UNDERSCORE).toUpperCase();
     final TravelDurationInput travelDurationInput =
@@ -98,5 +136,36 @@ public class TeamMovementProcess {
     }
 
     return new TravelPreparationInfo(time_in_minutes, travelMode);
+  }
+
+  public static String process(final String inputFileName) {
+    final TreasureHuntTeam instance = TreasureHuntTeam.getInstance();
+
+    try (Scanner scanner =
+        new Scanner(InputCommandsFileLoader.getReadingsInputFile(inputFileName))) {
+      while (scanner.hasNextLine()) {
+        try {
+          final String[] splitArr = scanner.nextLine().split(Constants.COMMA);
+
+          if (splitArr.length != 3) throw new AppException("invalid input");
+
+          if (splitArr.length == 3) {
+            final TravelPreparationInfo travelPreparationInfo = prepare(splitArr);
+
+            advance(
+                instance,
+                DirectionsTravelSpeedParser.getSpeedFromTravelMode(
+                    travelPreparationInfo.getTravelMode()),
+                splitArr[2].trim().toUpperCase(),
+                travelPreparationInfo.getTimeInMinutes());
+          }
+        } catch (final Exception ex) {
+          log.error("error in pgm", ex);
+        }
+      }
+    } catch (final Exception ex) {
+      log.error("error in accessing the file ", ex);
+    }
+    return displayResult(instance);
   }
 }
