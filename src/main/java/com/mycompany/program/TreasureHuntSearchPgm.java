@@ -1,4 +1,4 @@
-package com.mycompany.model;
+package com.mycompany.program;
 
 import java.util.Scanner;
 
@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.mycompany.constants.Constants;
 import com.mycompany.constants.TravelModesAndSpeeds;
+import com.mycompany.model.InputCommandsFileLoader;
+import com.mycompany.model.TreasureHuntTeam;
 import com.mycompany.process.TeamMovementProcess;
 
 public class TreasureHuntSearchPgm {
