@@ -1,27 +1,8 @@
 package com.mycompany.model;
 
-import java.util.Objects;
-
 public class TreasureHuntTeam {
   private float positionX;
   private float positionY;
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) return true;
-
-    if (!(obj instanceof TreasureHuntTeam)) return false;
-
-    final TreasureHuntTeam other = (TreasureHuntTeam) obj;
-
-    return Float.floatToIntBits(positionX) == Float.floatToIntBits(other.positionX)
-        && Float.floatToIntBits(positionY) == Float.floatToIntBits(other.positionY);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(positionX, positionY);
-  }
 
   @Override
   public String toString() {
