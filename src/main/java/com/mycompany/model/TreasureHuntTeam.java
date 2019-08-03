@@ -6,8 +6,6 @@ public class TreasureHuntTeam {
   private float positionX;
   private float positionY;
 
-  public TreasureHuntTeam() {}
-
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) return true;

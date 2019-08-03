@@ -3,10 +3,6 @@ package com.mycompany.exception;
 public final class AppException extends Exception {
   private static final long serialVersionUID = 1L;
 
-  public AppException() {
-    super();
-  }
-
   public AppException(final String message) {
     super(message);
   }

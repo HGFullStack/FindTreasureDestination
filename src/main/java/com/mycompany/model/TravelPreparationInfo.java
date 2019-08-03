@@ -34,15 +34,7 @@ public class TravelPreparationInfo {
     return timeInMinutes;
   }
 
-  public void setTimeInMinutes(final int timeInMinutes) {
-    this.timeInMinutes = timeInMinutes;
-  }
-
   public String getTravelMode() {
     return travelMode;
-  }
-
-  public void setTravelMode(final String travelMode) {
-    this.travelMode = travelMode;
   }
 }

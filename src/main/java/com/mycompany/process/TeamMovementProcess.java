@@ -142,10 +142,10 @@ public class TeamMovementProcess {
     String travelDuration = travelDurationInput.getTravelDuration().trim();
     int timeInMinutes = 0;
 
-    if (!travelDurationInput.isHour_present()) {
+    if (!travelDurationInput.isHourPresent()) {
       timeInMinutes = Integer.parseInt(travelDuration);
     } else {
-      if (!travelDurationInput.isMin_present()) {
+      if (!travelDurationInput.isMinPresent()) {
         travelDuration = travelDuration.concat(Constants.APPENDING_ZERO);
       }
 
