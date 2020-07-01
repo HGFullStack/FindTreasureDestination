@@ -9,7 +9,7 @@
 	<description>FindTreasureDestination</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<log4j2.version>2.1</log4j2.version>
+		<log4j2.version>2.13.3</log4j2.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
